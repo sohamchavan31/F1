@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 3)",
+      "Bash(Select-Object FullName, Length, LastWriteTime)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object FullName | Format-Table -AutoSize -HideTableHeaders)",
+      "PowerShell(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\f1_django\\\\f1_project\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\f1_django\\\\api\")",
+      "PowerShell(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object @{N='Path';E={$_.FullName.Replace\\('D:\\\\F1_replay\\\\',''\\)}} | Format-Table -AutoSize -HideTableHeaders)"
+    ]
+  }
+}
