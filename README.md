@@ -90,11 +90,10 @@ F1_replay/
 |---|---|
 | ![Session Picker](docs/screenshots/ss1.png) | ![Replay](docs/screenshots/ss2.png) |
 
-| Track Map | Encyclopedia |
+| Encyclopedia |
 |---|---|
-| ![Track Map](docs/screenshots/ss3.png) | ![Encyclopedia](docs/screenshots/ss4.png) |
+| ![Encyclopedia](docs/screenshots/ss3.png) |
 
-> Add screenshots to `docs/screenshots/` named `ss1.png` through `ss4.png`.
 
 ---
 
