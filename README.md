@@ -92,7 +92,7 @@ F1_replay/
 
 | Encyclopedia |
 |---|
-| ![Encyclopedia](docs/screenshots/ss3.png) |
+| ![Encyclopedia](docs/screenshots/ss3.jpg) |
 
 
 ---
