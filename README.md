@@ -91,7 +91,7 @@ F1_replay/
 | ![Session Picker](docs/screenshots/ss1.png) | ![Replay](docs/screenshots/ss2.png) |
 
 | Encyclopedia |
-|---|---|
+|---|
 | ![Encyclopedia](docs/screenshots/ss3.png) |
 
 
