@@ -2,7 +2,7 @@
 
 > A full-stack F1 race replay engine — stream real telemetry data from any Grand Prix (2018–present) in a retro terminal UI.
 
-![Session Picker](docs\screenshots\ss1.png)
+![Session Picker](docs/screenshots/ss1.png)
 
 ---
 
@@ -17,7 +17,7 @@
 - **Bulk loader** with resume support — load all 195 race sessions from 2018–2026
 - Retro terminal green-on-black aesthetic
 
-![Replay UI](docs\screenshots\ss2.png)
+![Replay UI](docs/screenshots/ss2.png)
 
 ---
 
@@ -88,13 +88,13 @@ F1_replay/
 
 | Session Picker | Replay View |
 |---|---|
-| ![Session Picker](docs\screenshots\ss1.png) | ![Replay](docs/screenshots/replay_ui.png) |
+| ![Session Picker](docs/screenshots/ss1.png) | ![Replay](docs/screenshots/ss2.png) |
 
 | Track Map | Encyclopedia |
 |---|---|
-| ![Track Map](docs/screenshots/track_map.png) | ![Encyclopedia](docs/screenshots/encyclopedia.png) |
+| ![Track Map](docs/screenshots/ss3.png) | ![Encyclopedia](docs/screenshots/ss4.png) |
 
-> Add your screenshots to `docs/screenshots/` with the filenames above.
+> Add screenshots to `docs/screenshots/` named `ss1.png` through `ss4.png`.
 
 ---
 

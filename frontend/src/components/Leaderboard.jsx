@@ -1,3 +1,11 @@
+const COMPOUND_COLOR = {
+  SOFT:         '#ff2244',
+  MEDIUM:       '#ffcc00',
+  HARD:         '#e8e8e8',
+  INTERMEDIATE: '#00cc44',
+  WET:          '#4488ff',
+}
+
 export default function Leaderboard({ cars, selectedDriver, onSelect }) {
   if (!cars) return (
     <div className="panel leaderboard-panel">
@@ -37,7 +45,16 @@ export default function Leaderboard({ cars, selectedDriver, onSelect }) {
               <div className="lb-code" style={{ color: car.color ?? 'var(--green)' }}>
                 {code}
               </div>
-              <div className="lb-speed">{car.speed}<span style={{ fontSize: 9, color: 'var(--text-dim)' }}>km/h</span></div>
+              <div className="lb-speed" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                {car.compound && COMPOUND_COLOR[car.compound?.toUpperCase()] && (
+                  <span style={{
+                    width: 7, height: 7, borderRadius: '50%',
+                    background: COMPOUND_COLOR[car.compound.toUpperCase()],
+                    display: 'inline-block', flexShrink: 0,
+                  }} />
+                )}
+                <span>{car.speed}<span style={{ fontSize: 9, color: 'var(--text-dim)' }}>km/h</span></span>
+              </div>
               <div className="lb-gap" style={{ color: i === 0 ? 'var(--yellow)' : 'var(--text-dim)' }}>
                 {i === 0 ? 'LEAD' : `L${car.lap}`}
               </div>
