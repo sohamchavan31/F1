@@ -1,13 +1,27 @@
 """
 DRF views for the F1 Replay API.
 
-Endpoints
----------
-GET  /api/sessions/                    → list all sessions (no frames)
+Replay endpoints
+----------------
+GET  /api/sessions/                    → list all sessions
 GET  /api/sessions/<session_id>/       → single session detail
 GET  /api/track-map/<event>/           → track map points
 GET  /api/track-map/<event>/<year>/    → track map for a specific year
 GET  /api/frame/<session_id>/<t_ms>/   → nearest frame at timestamp t_ms
+
+Encyclopedia endpoints
+----------------------
+GET  /api/encyclopedia/seasons/                → all seasons 1950–present
+GET  /api/encyclopedia/seasons/<year>/         → single season
+GET  /api/encyclopedia/drivers/                → all drivers
+GET  /api/encyclopedia/drivers/<name>/         → single driver
+GET  /api/encyclopedia/constructors/           → all constructors
+GET  /api/encyclopedia/constructors/<name>/    → single constructor
+GET  /api/encyclopedia/circuits/               → all circuits
+GET  /api/encyclopedia/circuits/<name>/        → single circuit
+GET  /api/encyclopedia/history/                → full history timeline
+GET  /api/encyclopedia/history/<era>/          → single era
+GET  /api/encyclopedia/champions/              → driver champions by year (quick lookup)
 """
 
 import os
@@ -92,3 +106,93 @@ def frame_at(request, session_id: str, t_ms: int):
     if not doc:
         return Response({"error": "no frame found"}, status=status.HTTP_404_NOT_FOUND)
     return Response(doc)
+
+
+# ── Encyclopedia ──────────────────────────────────────────────────────────────
+
+@api_view(["GET"])
+def seasons_list(request):
+    db   = _get_db()
+    docs = list(db.f1_seasons.find({}, {"_id": 0}).sort("year", 1))
+    return Response(docs)
+
+
+@api_view(["GET"])
+def season_detail(request, year: int):
+    db  = _get_db()
+    doc = db.f1_seasons.find_one({"year": year}, {"_id": 0})
+    if not doc:
+        return Response({"error": "not found"}, status=status.HTTP_404_NOT_FOUND)
+    return Response(doc)
+
+
+@api_view(["GET"])
+def drivers_list(request):
+    db   = _get_db()
+    docs = list(db.f1_drivers.find({}, {"_id": 0}).sort("championships", -1))
+    return Response(docs)
+
+
+@api_view(["GET"])
+def driver_detail(request, name: str):
+    db  = _get_db()
+    doc = db.f1_drivers.find_one({"name": {"$regex": f"^{name}$", "$options": "i"}}, {"_id": 0})
+    if not doc:
+        return Response({"error": "not found"}, status=status.HTTP_404_NOT_FOUND)
+    return Response(doc)
+
+
+@api_view(["GET"])
+def constructors_list(request):
+    db   = _get_db()
+    docs = list(db.f1_constructors.find({}, {"_id": 0}).sort("constructor_titles", -1))
+    return Response(docs)
+
+
+@api_view(["GET"])
+def constructor_detail(request, name: str):
+    db  = _get_db()
+    doc = db.f1_constructors.find_one({"name": {"$regex": f"^{name}$", "$options": "i"}}, {"_id": 0})
+    if not doc:
+        return Response({"error": "not found"}, status=status.HTTP_404_NOT_FOUND)
+    return Response(doc)
+
+
+@api_view(["GET"])
+def circuits_list(request):
+    db   = _get_db()
+    docs = list(db.f1_circuits.find({}, {"_id": 0}).sort("first_gp", 1))
+    return Response(docs)
+
+
+@api_view(["GET"])
+def circuit_detail(request, name: str):
+    db  = _get_db()
+    doc = db.f1_circuits.find_one({"name": {"$regex": name, "$options": "i"}}, {"_id": 0})
+    if not doc:
+        return Response({"error": "not found"}, status=status.HTTP_404_NOT_FOUND)
+    return Response(doc)
+
+
+@api_view(["GET"])
+def history_list(request):
+    db   = _get_db()
+    docs = list(db.f1_history.find({}, {"_id": 0}))
+    return Response(docs)
+
+
+@api_view(["GET"])
+def history_detail(request, era: str):
+    db  = _get_db()
+    doc = db.f1_history.find_one({"era": {"$regex": era, "$options": "i"}}, {"_id": 0})
+    if not doc:
+        return Response({"error": "not found"}, status=status.HTTP_404_NOT_FOUND)
+    return Response(doc)
+
+
+@api_view(["GET"])
+def champions_list(request):
+    """Quick lookup: all driver world champions by year."""
+    db   = _get_db()
+    docs = list(db.f1_seasons.find({}, {"_id": 0, "year": 1, "driver_champion": 1, "team": 1, "constructor_champion": 1}).sort("year", -1))
+    return Response(docs)

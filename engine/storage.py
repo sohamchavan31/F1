@@ -174,7 +174,7 @@ def _extract_track_path(race_session, track_bounds) -> list[dict]:
 
     for d in race_session.drivers:
         try:
-            laps = session.laps.pick_driver(d.code)
+            laps = session.laps.pick_drivers(d.code)
             fastest = laps.pick_fastest()
             tel = fastest.get_telemetry()
             if tel is not None and len(tel) > best_len:

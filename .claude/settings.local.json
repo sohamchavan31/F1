@@ -7,7 +7,24 @@
       "PowerShell(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object FullName | Format-Table -AutoSize -HideTableHeaders)",
       "PowerShell(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\f1_django\\\\f1_project\")",
       "PowerShell(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\f1_django\\\\api\")",
-      "PowerShell(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object @{N='Path';E={$_.FullName.Replace\\('D:\\\\F1_replay\\\\',''\\)}} | Format-Table -AutoSize -HideTableHeaders)"
+      "PowerShell(Get-ChildItem -Recurse d:\\\\F1_replay -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object @{N='Path';E={$_.FullName.Replace\\('D:\\\\F1_replay\\\\',''\\)}} | Format-Table -AutoSize -HideTableHeaders)",
+      "PowerShell(winget --version 2>&1)",
+      "PowerShell(winget install MongoDB.Server --accept-package-agreements --accept-source-agreements 2>&1)",
+      "PowerShell(Start-Service -Name \"MongoDB\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Service -Name \"MongoDB\")",
+      "PowerShell(cd d:\\\\F1_replay; python load_race.py --year 2023 --event Monza --session Race --test 2>&1 | Select-String -Pattern \"\\(INFO|ERROR|Traceback|Warning\\)\" | Where-Object { $_ -notmatch \"pick_driver|FutureWarn|req |_api |core \" })",
+      "PowerShell(Invoke-RestMethod -Uri \"http://127.0.0.1:8000/api/sessions/\")",
+      "PowerShell(Write-Host \"=== /api/sessions/ ===\"; \\(Invoke-RestMethod \"http://127.0.0.1:8000/api/sessions/\"\\) | ForEach-Object { \"  $_id=$\\($_._id\\)  event=$\\($_.event\\)  year=$\\($_.year\\)  drivers=$\\($_.drivers.Count\\)\" }; Write-Host \"\"; Write-Host \"=== /api/track-map/Monza/ ===\"; $tm = Invoke-RestMethod \"http://127.0.0.1:8000/api/track-map/Monza/\"; \"  event=$\\($tm.event\\)  year=$\\($tm.year\\)  n_points=$\\($tm.n_points\\)\"; Write-Host \"\"; Write-Host \"=== /api/frame/<id>/10000/ ===\"; $sid = \\(Invoke-RestMethod \"http://127.0.0.1:8000/api/sessions/\"\\)[0]._id; $f = Invoke-RestMethod \"http://127.0.0.1:8000/api/frame/$sid/10000/\"; \"  t=$\\($f.t\\)  active_cars=$\\(\\($f.cars.PSObject.Properties | Where-Object { $_.Value -ne $null }\\).Count\\)\")",
+      "PowerShell(cd d:\\\\F1_replay\\\\f1_django; Start-Process -NoNewWindow python -ArgumentList \"-m uvicorn f1_project.asgi:application --port 8000\"; Start-Sleep 3; Write-Host \"--- sessions ---\"; Invoke-RestMethod \"http://127.0.0.1:8000/api/sessions/\" | ForEach-Object { \"  id=$\\($_._id\\)  $\\($_.year\\) $\\($_.event\\) $\\($_.session_type\\)  drivers=$\\($_.drivers.Count\\)\" }; Write-Host \"--- track-map ---\"; $tm = Invoke-RestMethod \"http://127.0.0.1:8000/api/track-map/Monza/\"; \"  $\\($tm.event\\) $\\($tm.year\\)  n_points=$\\($tm.n_points\\)\"; Write-Host \"--- frame at t=30000 ---\"; $sid = \\(Invoke-RestMethod \"http://127.0.0.1:8000/api/sessions/\"\\)[0]._id; $f = Invoke-RestMethod \"http://127.0.0.1:8000/api/frame/$sid/30000/\"; \"  t=$\\($f.t\\)  cars=$\\(\\($f.cars.PSObject.Properties | Where-Object { $_.Value -ne $null }\\).Count\\) active\")",
+      "PowerShell($sid = \"6a1530f3ac57e7a537531ebf\"; $f = Invoke-RestMethod \"http://127.0.0.1:8000/api/frame/$sid/4970000/\"; Write-Host \"t=$\\($f.t\\)\"; $active = $f.cars.PSObject.Properties | Where-Object { $_.Value -ne $null }; Write-Host \"active_cars=$\\($active.Count\\)\"; $sample = $active | Select-Object -First 1; Write-Host \"sample driver: $\\($sample.Name\\)\"; $sample.Value | ConvertTo-Json)",
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "PowerShell(Start-Sleep 3; try { Invoke-WebRequest \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 5 | Select-Object StatusCode } catch { Write-Host \"Not ready yet: $_\" })",
+      "PowerShell(Get-Process -Id 6228)",
+      "Bash(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\docs\\\\screenshots\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"Created docs/screenshots/\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"d:\\\\F1_replay\\\\docs\\\\screenshots\")"
     ]
   }
 }

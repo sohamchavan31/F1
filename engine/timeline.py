@@ -56,7 +56,7 @@ def _telemetry_for_driver(session, driver_code: str) -> pd.DataFrame:
     Returns columns: SessionTime_ms, X, Y, Speed, Throttle, Brake, nGear, DRS,
                      LapNumber
     """
-    laps = session.laps.pick_driver(driver_code)
+    laps = session.laps.pick_drivers(driver_code)
     if laps.empty:
         return pd.DataFrame()
 
